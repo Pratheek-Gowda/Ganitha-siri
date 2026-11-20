@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Ganithasiri — Alva's Nudisiri Virasat Team Allocation</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,6 +17,10 @@
 
     html {
       scroll-behavior: smooth;
+      /* Ensure root never locks vertical scrolling on mobile Safari/Chrome */
+      overflow-y: auto;
+      height: auto;
+      -webkit-text-size-adjust: 100%;
     }
 
     body {
@@ -27,13 +31,19 @@
         linear-gradient(to bottom, rgba(107, 20, 34, 0.03) 1px, transparent 1px);
       background-size: 28px 28px;
       color: #1e1b18;
-      overflow-x: hidden;
+      /* Use overflow-x: clip instead of hidden so mobile touch-scroll momentum isn't trapped */
+      overflow-x: clip;
+      overflow-y: visible;
+      min-height: 100dvh;
+      touch-action: pan-y;
+      -webkit-overflow-scrolling: touch;
     }
 
+    /* Allow vertical pan gestures even when touch begins on interactive controls */
     button,
     select,
     input {
-      touch-action: manipulation;
+      touch-action: pan-y manipulation;
     }
 
     .font-heritage {
@@ -49,14 +59,15 @@
       .desktop-pool-scroll {
         max-height: 440px;
         overflow-y: auto;
+        overscroll-behavior: contain;
       }
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="flex flex-col">
 
   <!-- Opening Circular Modal -->
-  <div id="circularModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-stone-950/70 p-3 sm:p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="circularTitle">
+  <div id="circularModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-stone-950/70 p-3 sm:p-4 overflow-y-auto overscroll-contain" role="dialog" aria-modal="true" aria-labelledby="circularTitle">
     <div class="bg-white border border-amber-500/40 rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden my-auto">
       <div class="bg-gradient-to-r from-[#4a0e17] to-[#6b1422] text-white px-5 py-4 flex items-start justify-between gap-3">
         <div>
@@ -70,7 +81,7 @@
             Alva's Nudisiri Virasat • Jan 6 – Jan 10
           </p>
         </div>
-        <button type="button" onclick="closeCircularModal()" aria-label="Close" class="text-amber-200 hover:text-white p-1.5 rounded-lg cursor-pointer shrink-0">
+        <button type="button" onclick="closeCircularModal()" aria-label="Close" class="text-amber-200 hover:text-white p-2 rounded-lg cursor-pointer shrink-0">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
@@ -91,7 +102,7 @@
       </div>
 
       <div class="px-5 py-3.5 bg-stone-50 border-t border-stone-200 flex items-center justify-end">
-        <button type="button" onclick="closeCircularModal()" class="px-4 py-2 rounded-lg bg-[#6b1422] hover:bg-[#4a0e17] text-white font-semibold text-sm cursor-pointer">
+        <button type="button" onclick="closeCircularModal()" class="px-5 py-2.5 rounded-lg bg-[#6b1422] hover:bg-[#4a0e17] text-white font-semibold text-sm cursor-pointer">
           Continue
         </button>
       </div>
@@ -120,13 +131,13 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
-          <button type="button" onclick="openCircularModal()" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-white/10 hover:bg-white/20 text-amber-100 border border-white/20 cursor-pointer">
+          <button type="button" onclick="openCircularModal()" class="px-3.5 py-2 text-xs sm:text-sm font-medium rounded-lg bg-white/10 hover:bg-white/20 text-amber-100 border border-white/20 cursor-pointer">
             Guidelines
           </button>
-          <button type="button" onclick="copyWhatsAppSummary()" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white cursor-pointer">
+          <button type="button" onclick="copyWhatsAppSummary()" class="px-3.5 py-2 text-xs sm:text-sm font-medium rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white cursor-pointer">
             Copy WhatsApp
           </button>
-          <button type="button" onclick="exportCSV()" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/20 cursor-pointer">
+          <button type="button" onclick="exportCSV()" class="px-3.5 py-2 text-xs sm:text-sm font-medium rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/20 cursor-pointer">
             Export CSV
           </button>
         </div>
@@ -191,15 +202,15 @@
           type="text"
           oninput="renderAvailablePool()"
           placeholder="Search student..."
-          class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 mb-2.5 focus:outline-none focus:ring-2 focus:ring-[#6b1422]/30 focus:border-[#6b1422]"
+          class="w-full px-3 py-2 text-base sm:text-sm rounded-lg border border-slate-300 mb-2.5 focus:outline-none focus:ring-2 focus:ring-[#6b1422]/30 focus:border-[#6b1422]"
         />
 
-        <div id="selectedHelper" class="hidden mb-2.5 p-2 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-950 flex items-center justify-between gap-2">
+        <div id="selectedHelper" class="hidden mb-2.5 p-2.5 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-950 flex items-center justify-between gap-2">
           <span>Selected: <strong id="selectedStudentName"></strong></span>
-          <button type="button" onclick="clearSelectedStudent()" class="text-amber-900 font-semibold underline cursor-pointer">Clear</button>
+          <button type="button" onclick="clearSelectedStudent()" class="text-amber-900 font-semibold underline cursor-pointer py-1 px-2">Clear</button>
         </div>
 
-        <div id="availablePoolList" class="space-y-1.5 desktop-pool-scroll pr-1"></div>
+        <div id="availablePoolList" class="space-y-1.5 desktop-pool-scroll"></div>
       </aside>
 
       <!-- 6 Group Columns -->
@@ -210,13 +221,13 @@
   </main>
 
   <footer class="bg-white border-t border-stone-200 mt-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
       <div>Ganithasiri • As instructed by Department of Mathematics • Contact for any issues: <a href="mailto:admin@pratheek.app" class="underline hover:text-slate-700">admin@pratheek.app</a></div>
       <div>Auto-Assign: Nov 25, 11:59 PM • Idea: Dec 1 • Model: Dec 15</div>
     </div>
   </footer>
 
-  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg"></div>
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg pointer-events-none"></div>
 
   <script>
     const GROUP_LEADERS = [
@@ -291,6 +302,17 @@
     let isLocked = false;
     let isSaving = false;
     let selectedStudent = null;
+    let isUserScrolling = false;
+    let scrollTimeout = null;
+
+    // Pause background DOM re-renders while the user is actively finger-scrolling on mobile
+    window.addEventListener("scroll", () => {
+      isUserScrolling = true;
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isUserScrolling = false;
+      }, 450);
+    }, { passive: true });
 
     function openCircularModal() {
       const modal = document.getElementById("circularModal");
@@ -334,14 +356,14 @@
       return leader === "PRATHEEK" && slotIndex < 3;
     }
 
-    function isAnySelectFocused() {
+    function isAnyInputFocused() {
       const active = document.activeElement;
-      return Boolean(active && active.tagName === "SELECT");
+      return Boolean(active && (active.tagName === "SELECT" || active.tagName === "INPUT"));
     }
 
     async function syncFromServer(forceRender = false) {
       if (isSaving) return;
-      if (!forceRender && isAnySelectFocused()) return;
+      if (!forceRender && (isAnyInputFocused() || isUserScrolling)) return;
 
       const badge = document.getElementById("syncStatusBadge");
       try {
@@ -536,7 +558,7 @@
           <button
             type="button"
             ${isLocked ? "disabled" : `onclick="selectStudentForQuickAssign('${name.replace(/'/g, "\\'")}')"`}
-            class="w-full text-left px-3 py-2 rounded-lg border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 transition ${
+            class="w-full text-left px-3 py-2.5 rounded-lg border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 transition ${
               isSelected
                 ? "bg-amber-100 border-amber-500 text-amber-950 font-semibold"
                 : isLocked
@@ -587,13 +609,13 @@
               <select
                 aria-label="${leader} Member ${sIdx + 2}"
                 onchange="assignStudent('${leader.replace(/'/g, "\\'")}', ${sIdx}, this.value)"
-                class="w-full text-xs sm:text-sm font-medium bg-white border border-slate-200 rounded-md px-2.5 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#6b1422]/30 focus:border-[#6b1422]"
+                class="w-full text-base sm:text-sm font-medium bg-white border border-slate-200 rounded-md px-2.5 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#6b1422]/30 focus:border-[#6b1422]"
               >
                 ${optionsHtml}
               </select>
               ${
                 member
-                  ? `<button type="button" onclick="event.stopPropagation(); removeStudent('${leader.replace(/'/g, "\\'")}', ${sIdx})" aria-label="Remove ${member}" class="shrink-0 px-2.5 py-1.5 text-sm font-semibold text-rose-600 hover:bg-rose-50 rounded cursor-pointer">×</button>`
+                  ? `<button type="button" onclick="event.stopPropagation(); removeStudent('${leader.replace(/'/g, "\\'")}', ${sIdx})" aria-label="Remove ${member}" class="shrink-0 px-3 py-2 text-sm font-semibold text-rose-600 hover:bg-rose-50 rounded cursor-pointer">×</button>`
                   : ""
               }
             </div>
@@ -631,10 +653,14 @@
     }
 
     function render() {
+      const prevScrollY = window.scrollY;
       renderMetrics();
       renderBanner();
       renderAvailablePool();
       renderGroupsGrid();
+      if (Math.abs(window.scrollY - prevScrollY) > 4) {
+        window.scrollTo(0, prevScrollY);
+      }
     }
 
     function updateCountdown() {
@@ -656,6 +682,22 @@
       timerEl.textContent = `${pad(days)}d : ${pad(hours)}h : ${pad(minutes)}m : ${pad(seconds)}s`;
     }
 
+    function fallbackCopyText(text) {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand("copy");
+        showToast("Copied WhatsApp list");
+      } catch (e) {
+        showToast("Could not copy");
+      }
+      document.body.removeChild(textarea);
+    }
+
     function copyWhatsAppSummary() {
       const lines = [
         "*GANITHASIRI — Science & Maths Exhibition*",
@@ -675,11 +717,14 @@
         lines.push("");
       });
 
-      navigator.clipboard.writeText(lines.join("\n")).then(() => {
-        showToast("Copied WhatsApp list");
-      }).catch(() => {
-        showToast("Could not copy");
-      });
+      const text = lines.join("\n");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("Copied WhatsApp list");
+        }).catch(() => fallbackCopyText(text));
+      } else {
+        fallbackCopyText(text);
+      }
     }
 
     function exportCSV() {
