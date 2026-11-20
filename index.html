@@ -1,37 +1,40 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ganithasiri — Alva's Nudisiri Virasat Team Allocation</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --maroon-deep: #3d0911;
+      --maroon-deep: #4a0e17;
       --maroon-rich: #6b1422;
-      --maroon-accent: #881b2d;
-      --gold-warm: #d97706;
-      --parchment: #faf7f0;
+      --parchment: #fbf8f1;
     }
 
     html {
       scroll-behavior: smooth;
-      -webkit-text-size-adjust: 100%;
     }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background-color: var(--parchment);
       background-image:
-        radial-gradient(rgba(107, 20, 34, 0.05) 1px, transparent 1px);
-      background-size: 20px 20px;
-      color: #1c1917;
-      min-height: 100dvh;
-      overflow-x: clip;
-      -webkit-tap-highlight-color: transparent;
+        linear-gradient(to right, rgba(107, 20, 34, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(107, 20, 34, 0.03) 1px, transparent 1px);
+      background-size: 28px 28px;
+      color: #1e1b18;
+      overflow-x: hidden;
+    }
+
+    button,
+    select,
+    input {
+      touch-action: manipulation;
     }
 
     .font-heritage {
@@ -43,292 +46,178 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* Smooth custom scrollbar for desktop pool */
     @media (min-width: 1024px) {
-      .desktop-sticky-panel {
-        position: sticky;
-        top: 1.25rem;
-      }
-      .desktop-pool-list {
-        max-height: calc(100vh - 280px);
+      .desktop-pool-scroll {
+        max-height: 440px;
         overflow-y: auto;
-        overscroll-behavior: contain;
       }
-      .desktop-pool-list::-webkit-scrollbar {
-        width: 6px;
-      }
-      .desktop-pool-list::-webkit-scrollbar-thumb {
-        background-color: rgba(107, 20, 34, 0.2);
-        border-radius: 9999px;
-      }
-    }
-
-    /* Custom clean select chevron */
-    select.custom-select {
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 0.65rem center;
-      background-size: 1rem;
-      padding-right: 2.1rem;
     }
   </style>
 </head>
-<body class="flex flex-col pb-24 lg:pb-8">
+<body class="min-h-screen flex flex-col">
 
-  <!-- Opening Circular / Guidelines Modal -->
-  <div id="circularModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-stone-950/75 backdrop-blur-xs p-3 sm:p-5 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="circularTitle">
-    <div class="bg-white border border-amber-500/40 rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden my-auto transform transition-all">
-      <div class="bg-gradient-to-br from-[#3d0911] via-[#6b1422] to-[#4a0e17] text-white px-5 py-4 sm:px-6 sm:py-5 flex items-start justify-between gap-3">
+  <!-- Opening Circular Modal -->
+  <div id="circularModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-stone-950/70 p-3 sm:p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="circularTitle">
+    <div class="bg-white border border-amber-500/40 rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden my-auto">
+      <div class="bg-gradient-to-r from-[#4a0e17] to-[#6b1422] text-white px-5 py-4 flex items-start justify-between gap-3">
         <div>
-          <span class="inline-block px-2.5 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/30 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-amber-200">
-            Department of Mathematics Circular
-          </span>
-          <h2 id="circularTitle" class="font-heritage text-lg sm:text-xl font-bold mt-1.5 leading-snug">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-amber-200">
+            As instructed by Department of Mathematics
+          </div>
+          <h2 id="circularTitle" class="font-heritage text-lg sm:text-xl font-bold mt-0.5">
             Ganithasiri — Science &amp; Maths Exhibition
           </h2>
           <p class="text-amber-100/90 text-xs mt-0.5">
             Alva's Nudisiri Virasat • Jan 6 – Jan 10
           </p>
         </div>
-        <button type="button" onclick="closeCircularModal()" aria-label="Close modal" class="text-amber-200 hover:text-white hover:bg-white/10 p-2 rounded-xl cursor-pointer shrink-0 transition">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+        <button type="button" onclick="closeCircularModal()" aria-label="Close" class="text-amber-200 hover:text-white p-1.5 rounded-lg cursor-pointer shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
       </div>
 
-      <div class="p-5 sm:p-6 space-y-4 text-sm text-stone-700 leading-relaxed">
-        <p class="text-stone-800">
-          As instructed by the <strong>Department of Mathematics</strong>, for <strong>Alva's Nudisiri Virasat (Jan 6 – Jan 10)</strong>, teams will serve as scientific volunteers and exhibit working mathematics models.
+      <div class="p-5 space-y-3 text-sm text-slate-700 leading-relaxed">
+        <p>
+          As instructed by Department of Mathematics, for <strong>Alva's Nudisiri Virasat (Jan 6 – Jan 10)</strong>, teams will serve as scientific volunteers and exhibit working mathematics models.
         </p>
-
-        <div class="bg-amber-50/80 border border-amber-200/80 rounded-xl p-3.5 space-y-2 text-xs sm:text-sm">
-          <div class="flex items-start gap-2.5">
-            <span class="w-5 h-5 rounded-full bg-[#6b1422] text-white text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">1</span>
-            <span><strong>5 students per group</strong> is compulsory (6 teams = 30 students).</span>
-          </div>
-          <div class="flex items-start gap-2.5">
-            <span class="w-5 h-5 rounded-full bg-[#6b1422] text-white text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">2</span>
-            <span>Auto-assignment runs sharp on <strong>November 25 at 11:59 PM</strong>.</span>
-          </div>
-          <div class="flex items-start gap-2.5">
-            <span class="w-5 h-5 rounded-full bg-[#6b1422] text-white text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">3</span>
-            <span>Submit team idea on <strong>December 1</strong> &amp; working models on <strong>December 15</strong>.</span>
-          </div>
-          <div class="flex items-start gap-2.5">
-            <span class="w-5 h-5 rounded-full bg-[#6b1422] text-white text-[11px] font-bold flex items-center justify-center shrink-0 mt-0.5">4</span>
-            <span>Assigned students automatically disappear from the available pool for other groups.</span>
-          </div>
-        </div>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm">
+          <li><strong>5 students per group</strong> is compulsory (6 teams = 30 students).</li>
+          <li>Auto-assignment runs sharp on <strong>November 25 at 11:59 PM</strong>.</li>
+          <li>Submit team idea on <strong>December 1</strong>.</li>
+          <li>Submit working models on <strong>December 15</strong>.</li>
+          <li>Assigned students disappear from the available list for other groups.</li>
+        </ul>
       </div>
 
-      <div class="px-5 py-3.5 sm:px-6 bg-stone-50 border-t border-stone-200 flex items-center justify-end">
-        <button type="button" onclick="closeCircularModal()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#6b1422] hover:bg-[#4a0e17] active:scale-[0.99] text-white font-semibold text-sm shadow-sm cursor-pointer transition">
-          Got it, Continue
+      <div class="px-5 py-3.5 bg-stone-50 border-t border-stone-200 flex items-center justify-end">
+        <button type="button" onclick="closeCircularModal()" class="px-4 py-2 rounded-lg bg-[#6b1422] hover:bg-[#4a0e17] text-white font-semibold text-sm cursor-pointer">
+          Continue
         </button>
       </div>
     </div>
   </div>
 
   <!-- Top Header -->
-  <header class="bg-gradient-to-br from-[#3d0911] via-[#6b1422] to-[#4a0e17] text-white shadow-lg border-b-2 border-amber-500/50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-        <div class="space-y-1">
-          <div class="flex flex-wrap items-center gap-2 text-[11px] sm:text-xs text-amber-200">
-            <span class="font-semibold tracking-wide">ganithasiri.pratheek.app</span>
-            <span class="opacity-50">•</span>
-            <span class="hidden sm:inline">Department of Mathematics</span>
-            <span id="syncStatusBadge" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 font-semibold text-[11px]">
+  <header class="bg-gradient-to-r from-[#4a0e17] via-[#6b1422] to-[#4a0e17] text-white shadow-md border-b-2 border-amber-500/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <div class="flex flex-wrap items-center gap-2 text-xs text-amber-200">
+            <span class="font-semibold">ganithasiri.pratheek.app</span>
+            <span>•</span>
+            <span>As instructed by Department of Mathematics</span>
+            <span id="syncStatusBadge" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 font-medium">
               Live Sync
             </span>
           </div>
-          <h1 class="font-heritage text-xl sm:text-2xl lg:text-[26px] font-bold tracking-wide leading-tight">
+          <h1 class="font-heritage text-xl sm:text-2xl font-bold tracking-wide mt-1">
             Ganithasiri — Science &amp; Mathematics Exhibition
           </h1>
-          <p class="text-amber-100/90 text-xs sm:text-sm">
-            Alva's Nudisiri Virasat (Jan 6 – Jan 10) • 6 Groups of 5
+          <p class="text-amber-100/90 text-xs mt-0.5">
+            Jan 6 – Jan 10 • 6 Groups of 5 • Auto-Assign: <strong>Nov 25, 11:59 PM</strong> • Idea: <strong>Dec 1</strong> • Model: <strong>Dec 15</strong>
           </p>
         </div>
 
-        <!-- Action Buttons: Full grid on mobile, inline on desktop -->
-        <div class="grid grid-cols-3 sm:flex sm:flex-wrap items-center gap-2">
-          <button type="button" onclick="openCircularModal()" class="px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 text-amber-100 border border-white/20 cursor-pointer transition flex items-center justify-center gap-1.5">
-            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span>Rules</span>
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" onclick="openCircularModal()" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-white/10 hover:bg-white/20 text-amber-100 border border-white/20 cursor-pointer">
+            Guidelines
           </button>
-          <button type="button" onclick="copyWhatsAppSummary()" class="px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-xl bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white shadow-sm cursor-pointer transition flex items-center justify-center gap-1.5">
-            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-            <span>WhatsApp</span>
+          <button type="button" onclick="copyWhatsAppSummary()" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white cursor-pointer">
+            Copy WhatsApp
           </button>
-          <button type="button" onclick="exportCSV()" class="px-3 py-2.5 sm:py-2 text-xs sm:text-sm font-semibold rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 text-white border border-white/20 cursor-pointer transition flex items-center justify-center gap-1.5">
-            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span>CSV</span>
+          <button type="button" onclick="exportCSV()" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/20 cursor-pointer">
+            Export CSV
           </button>
         </div>
       </div>
 
-      <!-- Countdown & Milestones Bar -->
-      <div class="mt-4 pt-3.5 border-t border-white/15 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 text-xs">
-        <div class="flex items-center justify-between sm:justify-start gap-2.5 bg-black/30 px-3.5 py-2 rounded-xl border border-amber-400/25">
-          <div class="flex items-center gap-2">
-            <span class="text-amber-200 font-semibold">Auto-Assign Cutoff:</span>
-            <span id="countdownTimer" class="font-mono-num text-sm sm:text-base font-bold text-white">--d : --h : --m : --s</span>
-          </div>
-          <span id="lockStatePill" class="px-2 py-0.5 rounded-md bg-amber-400 text-[#3d0911] font-extrabold uppercase tracking-wider text-[10px]">Open</span>
+      <!-- Countdown Bar -->
+      <div class="mt-3 pt-3 border-t border-white/15 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex flex-wrap items-center gap-2.5 bg-black/25 px-3.5 py-2 rounded-lg border border-amber-400/20">
+          <span class="text-amber-200 font-semibold">Nov 25, 11:59 PM Cutoff:</span>
+          <span id="countdownTimer" class="font-mono-num text-sm sm:text-base font-bold text-white">--d : --h : --m : --s</span>
+          <span id="lockStatePill" class="px-2 py-0.5 rounded bg-amber-400 text-[#4a0e17] font-bold">Open</span>
         </div>
-
-        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-amber-100/90 px-1">
-          <span>Cutoff: <strong>Nov 25, 11:59 PM</strong></span>
-          <span class="opacity-40">•</span>
-          <span>Idea: <strong>Dec 1</strong></span>
-          <span class="opacity-40">•</span>
-          <span>Model: <strong>Dec 15</strong></span>
+        <div class="text-amber-100/90">
+          Idea: <strong>Dec 1</strong> &nbsp;|&nbsp; Model: <strong>Dec 15</strong> &nbsp;|&nbsp; Event: <strong>Jan 6–10</strong>
         </div>
       </div>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 flex-1 space-y-4 sm:space-y-6">
+  <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-5 flex-1 space-y-5">
 
-    <!-- Status Alert Banner (when locked) -->
-    <div id="statusBanner" class="hidden rounded-xl px-4 py-3 text-xs sm:text-sm font-semibold border bg-amber-50 border-amber-300 text-amber-950 shadow-xs">
+    <div id="statusBanner" class="hidden rounded-xl px-4 py-3 text-sm font-medium border bg-amber-50 border-amber-300 text-amber-950">
       <span id="statusBannerText"></span>
     </div>
 
-    <!-- Compact Metrics Strip -->
-    <section class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
-      <div class="bg-white rounded-2xl p-3.5 sm:p-4 border border-stone-200/90 shadow-2xs">
-        <div class="text-[10px] sm:text-[11px] font-bold text-stone-500 uppercase tracking-wider">Total Cohort</div>
-        <div class="text-lg sm:text-2xl font-extrabold text-stone-900 mt-0.5">30 <span class="text-xs font-medium text-stone-500">(6 × 5)</span></div>
+    <!-- Compact Stats -->
+    <section class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class="bg-white rounded-xl p-3.5 border border-stone-200">
+        <div class="text-[11px] font-semibold text-slate-500 uppercase">Total Students</div>
+        <div class="text-xl font-bold text-slate-900 mt-0.5">30 <span class="text-xs font-normal text-slate-500">(6 × 5)</span></div>
       </div>
-      <div class="bg-white rounded-2xl p-3.5 sm:p-4 border border-stone-200/90 shadow-2xs">
-        <div class="text-[10px] sm:text-[11px] font-bold text-stone-500 uppercase tracking-wider">Filled Member Slots</div>
-        <div id="filledCount" class="text-lg sm:text-2xl font-extrabold text-[#6b1422] mt-0.5">3 / 24</div>
+      <div class="bg-white rounded-xl p-3.5 border border-stone-200">
+        <div class="text-[11px] font-semibold text-slate-500 uppercase">Filled Member Slots</div>
+        <div id="filledCount" class="text-xl font-bold text-[#6b1422] mt-0.5">3 / 24</div>
       </div>
-      <div class="bg-white rounded-2xl p-3.5 sm:p-4 border border-stone-200/90 shadow-2xs">
-        <div class="text-[10px] sm:text-[11px] font-bold text-stone-500 uppercase tracking-wider">Unassigned Pool</div>
-        <div id="availableCount" class="text-lg sm:text-2xl font-extrabold text-emerald-700 mt-0.5">21</div>
+      <div class="bg-white rounded-xl p-3.5 border border-stone-200">
+        <div class="text-[11px] font-semibold text-slate-500 uppercase">Available Pool</div>
+        <div id="availableCount" class="text-xl font-bold text-emerald-700 mt-0.5">21</div>
       </div>
-      <div class="bg-white rounded-2xl p-3.5 sm:p-4 border border-stone-200/90 shadow-2xs">
-        <div class="text-[10px] sm:text-[11px] font-bold text-stone-500 uppercase tracking-wider">Complete Teams</div>
-        <div id="completeTeamsCount" class="text-lg sm:text-2xl font-extrabold text-amber-700 mt-0.5">0 / 6</div>
+      <div class="bg-white rounded-xl p-3.5 border border-stone-200">
+        <div class="text-[11px] font-semibold text-slate-500 uppercase">Complete Groups</div>
+        <div id="completeTeamsCount" class="text-xl font-bold text-amber-700 mt-0.5">0 / 6</div>
       </div>
     </section>
 
-    <!-- Mobile View Switcher (Visible below lg breakpoint) -->
-    <div class="lg:hidden sticky top-2 z-30 bg-white/95 backdrop-blur-md p-1.5 rounded-2xl border border-stone-200 shadow-md grid grid-cols-2 gap-1.5">
-      <button
-        type="button"
-        id="tabBtnGroups"
-        onclick="setMobileTab('groups')"
-        class="py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 bg-[#6b1422] text-white shadow-xs cursor-pointer"
-      >
-        <span>6 Team Groups</span>
-        <span id="mobileTabTeamsBadge" class="px-1.5 py-0.5 text-[10px] rounded-full bg-white/20 text-white">0/6</span>
-      </button>
-      <button
-        type="button"
-        id="tabBtnPool"
-        onclick="setMobileTab('pool')"
-        class="py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 text-stone-600 hover:bg-stone-100 cursor-pointer"
-      >
-        <span>Available Students</span>
-        <span id="mobileTabPoolBadge" class="px-1.5 py-0.5 text-[10px] rounded-full bg-emerald-100 text-emerald-800">21</span>
-      </button>
-    </div>
-
-    <!-- Main Split Workspace: Left Sticky Pool on Desktop, Tab-Controlled on Mobile -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-start">
-
-      <!-- Available Students Pool Panel -->
-      <aside id="poolPanel" class="hidden lg:block lg:col-span-4 desktop-sticky-panel bg-white rounded-2xl border border-stone-200 shadow-xs p-4 sm:p-5">
-        <div class="flex items-center justify-between gap-2 mb-3">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+      <!-- Available Students Pool -->
+      <aside class="lg:col-span-4 bg-white rounded-2xl border border-stone-200 p-4">
+        <div class="flex items-center justify-between gap-2 mb-2.5">
           <div>
-            <h2 class="text-base font-extrabold text-stone-900">Available Students</h2>
-            <p class="text-xs text-stone-500 mt-0.5">Tap a student below, then tap an empty group slot</p>
+            <h2 class="text-sm font-bold text-slate-900">Available Students</h2>
+            <p class="text-xs text-slate-500">Tap a student, then tap an empty slot</p>
           </div>
-          <span id="poolBadge" class="px-2.5 py-1 text-xs font-bold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+          <span id="poolBadge" class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
             21 left
           </span>
         </div>
 
-        <!-- Search Input -->
-        <div class="relative mb-3">
-          <svg class="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-          </svg>
-          <input
-            id="searchInput"
-            type="text"
-            oninput="renderAvailablePool()"
-            placeholder="Search student name..."
-            class="w-full pl-9 pr-8 py-2.5 text-base sm:text-sm rounded-xl border border-stone-300 bg-stone-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#6b1422]/25 focus:border-[#6b1422] transition"
-          />
-          <button
-            type="button"
-            id="clearSearchBtn"
-            onclick="document.getElementById('searchInput').value=''; renderAvailablePool();"
-            class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 p-1 cursor-pointer"
-            aria-label="Clear search"
-          >
-            ✕
-          </button>
+        <input
+          id="searchInput"
+          type="text"
+          oninput="renderAvailablePool()"
+          placeholder="Search student..."
+          class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 mb-2.5 focus:outline-none focus:ring-2 focus:ring-[#6b1422]/30 focus:border-[#6b1422]"
+        />
+
+        <div id="selectedHelper" class="hidden mb-2.5 p-2 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-950 flex items-center justify-between gap-2">
+          <span>Selected: <strong id="selectedStudentName"></strong></span>
+          <button type="button" onclick="clearSelectedStudent()" class="text-amber-900 font-semibold underline cursor-pointer">Clear</button>
         </div>
 
-        <!-- Active Selection Helper Banner -->
-        <div id="selectedHelper" class="hidden mb-3 p-3 rounded-xl bg-amber-50 border border-amber-300 text-xs text-amber-950 flex items-center justify-between gap-2 shadow-2xs">
-          <div class="min-w-0">
-            <span class="text-[10px] uppercase tracking-wider font-bold text-amber-700 block">Ready to place</span>
-            <strong id="selectedStudentName" class="text-sm font-extrabold truncate block"></strong>
-          </div>
-          <button type="button" onclick="clearSelectedStudent()" class="px-2.5 py-1.5 rounded-lg bg-amber-200/70 hover:bg-amber-200 text-amber-950 font-bold cursor-pointer shrink-0 transition">
-            Cancel
-          </button>
-        </div>
-
-        <!-- Student Buttons List -->
-        <div id="availablePoolList" class="space-y-2 desktop-pool-list"></div>
+        <div id="availablePoolList" class="space-y-1.5 desktop-pool-scroll pr-1"></div>
       </aside>
 
-      <!-- 6 Group Cards Grid -->
-      <section id="groupsPanel" class="lg:col-span-8">
-        <div id="groupsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      <!-- 6 Group Columns -->
+      <section class="lg:col-span-8">
+        <div id="groupsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
       </section>
     </div>
   </main>
 
-  <!-- Mobile Sticky Selection Dock (Appears on phones when a student is tapped from Pool) -->
-  <div id="mobileSelectionDock" class="lg:hidden fixed bottom-0 inset-x-0 z-40 hidden bg-[#3d0911] text-white border-t-2 border-amber-400 px-4 py-3 shadow-2xl">
-    <div class="max-w-lg mx-auto flex items-center justify-between gap-3">
-      <div class="min-w-0">
-        <div class="text-[10px] uppercase tracking-wider text-amber-300 font-bold">Tap any dashed slot to assign:</div>
-        <div id="dockStudentName" class="text-sm font-extrabold truncate text-white"></div>
-      </div>
-      <div class="flex items-center gap-2 shrink-0">
-        <button type="button" onclick="setMobileTab('groups')" id="dockViewGroupsBtn" class="px-3 py-2 rounded-xl bg-amber-400 text-[#3d0911] text-xs font-extrabold cursor-pointer">
-          View Groups
-        </button>
-        <button type="button" onclick="clearSelectedStudent()" class="px-3 py-2 rounded-xl bg-white/15 text-white text-xs font-semibold cursor-pointer">
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
   <footer class="bg-white border-t border-stone-200 mt-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-stone-500 text-center sm:text-left">
-      <div>Ganithasiri • Department of Mathematics • Support: <a href="mailto:admin@pratheek.app" class="underline font-medium hover:text-stone-800">admin@pratheek.app</a></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+      <div>Ganithasiri • As instructed by Department of Mathematics • Contact for any issues: <a href="mailto:admin@pratheek.app" class="underline hover:text-slate-700">admin@pratheek.app</a></div>
       <div>Auto-Assign: Nov 25, 11:59 PM • Idea: Dec 1 • Model: Dec 15</div>
     </div>
   </footer>
 
-  <!-- Toast Notification -->
-  <div id="toast" class="fixed bottom-20 lg:bottom-6 right-4 left-4 sm:left-auto sm:right-6 z-50 hidden bg-stone-900/95 text-white text-xs sm:text-sm font-semibold px-4 py-3 rounded-xl shadow-xl text-center sm:text-left pointer-events-none border border-white/10"></div>
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden bg-slate-900 text-white text-xs sm:text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg"></div>
 
   <script>
     const GROUP_LEADERS = [
@@ -380,7 +269,6 @@
     ];
 
     const DEADLINE_MS = new Date("2026-11-25T23:59:00+05:30").getTime();
-    const LOCAL_BACKUP_KEY = "ganithasiri_rosters_v1";
 
     function createDefaultRosters() {
       const data = {};
@@ -399,73 +287,11 @@
       return data;
     }
 
-    function loadLocalBackup() {
-      try {
-        const raw = localStorage.getItem(LOCAL_BACKUP_KEY);
-        if (!raw) return createDefaultRosters();
-        const parsed = JSON.parse(raw);
-        const base = createDefaultRosters();
-        GROUP_LEADERS.forEach((leader) => {
-          if (Array.isArray(parsed[leader]) && parsed[leader].length === 4) {
-            base[leader] = parsed[leader];
-          }
-        });
-        base["PRATHEEK"][0] = LOCKED_PRATHEEK_MEMBERS[0];
-        base["PRATHEEK"][1] = LOCKED_PRATHEEK_MEMBERS[1];
-        base["PRATHEEK"][2] = LOCKED_PRATHEEK_MEMBERS[2];
-        return base;
-      } catch (e) {
-        return createDefaultRosters();
-      }
-    }
-
-    function saveLocalBackup() {
-      try {
-        localStorage.setItem(LOCAL_BACKUP_KEY, JSON.stringify(rosters));
-      } catch (e) {}
-    }
-
-    let rosters = loadLocalBackup();
+    let rosters = createDefaultRosters();
     let lastServerSnapshot = "";
-    let isLocked = Date.now() >= DEADLINE_MS;
+    let isLocked = false;
     let isSaving = false;
     let selectedStudent = null;
-    let mobileActiveTab = "groups"; // 'groups' | 'pool'
-    let isUserScrolling = false;
-    let scrollTimeout = null;
-
-    window.addEventListener("scroll", () => {
-      isUserScrolling = true;
-      clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(() => {
-        isUserScrolling = false;
-      }, 450);
-    }, { passive: true });
-
-    function setMobileTab(tab) {
-      mobileActiveTab = tab;
-      const poolPanel = document.getElementById("poolPanel");
-      const groupsPanel = document.getElementById("groupsPanel");
-      const tabBtnGroups = document.getElementById("tabBtnGroups");
-      const tabBtnPool = document.getElementById("tabBtnPool");
-      const dockViewBtn = document.getElementById("dockViewGroupsBtn");
-
-      if (tab === "pool") {
-        poolPanel.classList.remove("hidden");
-        groupsPanel.classList.add("hidden", "lg:block");
-
-        tabBtnPool.className = "py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 bg-[#6b1422] text-white shadow-xs cursor-pointer";
-        tabBtnGroups.className = "py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 text-stone-600 hover:bg-stone-100 cursor-pointer";
-        if (dockViewBtn) dockViewBtn.classList.remove("hidden");
-      } else {
-        groupsPanel.classList.remove("hidden");
-        poolPanel.classList.add("hidden", "lg:block");
-
-        tabBtnGroups.className = "py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 bg-[#6b1422] text-white shadow-xs cursor-pointer";
-        tabBtnPool.className = "py-2.5 px-3 rounded-xl text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 text-stone-600 hover:bg-stone-100 cursor-pointer";
-        if (dockViewBtn) dockViewBtn.classList.add("hidden");
-      }
-    }
 
     function openCircularModal() {
       const modal = document.getElementById("circularModal");
@@ -486,7 +312,7 @@
       clearTimeout(showToast._timer);
       showToast._timer = setTimeout(() => {
         toast.classList.add("hidden");
-      }, 2600);
+      }, 2500);
     }
 
     function getAssignedSet() {
@@ -509,19 +335,19 @@
       return leader === "PRATHEEK" && slotIndex < 3;
     }
 
-    function isAnyInputFocused() {
+    function isAnySelectFocused() {
       const active = document.activeElement;
-      return Boolean(active && (active.tagName === "SELECT" || active.tagName === "INPUT"));
+      return Boolean(active && active.tagName === "SELECT");
     }
 
     async function syncFromServer(forceRender = false) {
       if (isSaving) return;
-      if (!forceRender && (isAnyInputFocused() || isUserScrolling)) return;
+      if (!forceRender && isAnySelectFocused()) return;
 
       const badge = document.getElementById("syncStatusBadge");
       try {
         const res = await fetch("/api/teams", { cache: "no-store" });
-        if (!res.ok) throw new Error("Offline or standalone mode");
+        if (!res.ok) throw new Error("Failed");
         const data = await res.json();
 
         const normalized = JSON.stringify(data.rosters || {});
@@ -532,7 +358,6 @@
           rosters["PRATHEEK"][0] = LOCKED_PRATHEEK_MEMBERS[0];
           rosters["PRATHEEK"][1] = LOCKED_PRATHEEK_MEMBERS[1];
           rosters["PRATHEEK"][2] = LOCKED_PRATHEEK_MEMBERS[2];
-          saveLocalBackup();
         }
 
         if (selectedStudent && getAssignedSet().has(selectedStudent)) {
@@ -541,7 +366,7 @@
 
         if (badge) {
           badge.textContent = "Live Sync";
-          badge.className = "px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 font-semibold text-[11px]";
+          badge.className = "px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 font-medium";
         }
 
         if (forceRender || normalized !== lastServerSnapshot || nextLocked !== isLocked) {
@@ -551,15 +376,13 @@
         }
       } catch (err) {
         if (badge) {
-          badge.textContent = "Local Mode";
-          badge.className = "px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30 font-semibold text-[11px]";
+          badge.textContent = "Retrying";
+          badge.className = "px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30 font-medium";
         }
       }
     }
 
     async function saveToServer() {
-      saveLocalBackup();
-
       if (isLocked || Date.now() >= DEADLINE_MS) {
         isLocked = true;
         render();
@@ -571,7 +394,7 @@
       const badge = document.getElementById("syncStatusBadge");
       if (badge) {
         badge.textContent = "Saving...";
-        badge.className = "px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-200 border border-sky-400/30 font-semibold text-[11px]";
+        badge.className = "px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-200 border border-sky-400/30 font-medium";
       }
 
       try {
@@ -590,18 +413,12 @@
         }
 
         rosters = data.rosters;
-        saveLocalBackup();
         lastServerSnapshot = JSON.stringify(rosters);
         isLocked = Boolean(data.autoAssigned);
         render();
-        showToast("Saved & synced");
+        showToast("Saved");
       } catch (err) {
-        // Fallback gracefully when previewed standalone without backend API
-        if (badge) {
-          badge.textContent = "Saved Locally";
-          badge.className = "px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30 font-semibold text-[11px]";
-        }
-        showToast("Updated team roster");
+        showToast("Could not save. Check connection.");
       } finally {
         isSaving = false;
       }
@@ -642,12 +459,6 @@
       selectedStudent = selectedStudent === name ? null : name;
       renderAvailablePool();
       renderGroupsGrid();
-
-      // On phone, automatically switch to Groups view when a student is selected so they can tap an empty slot right away
-      if (selectedStudent && window.innerWidth < 1024) {
-        setMobileTab("groups");
-        showToast(`Tap an empty slot to add ${selectedStudent}`);
-      }
     }
 
     function clearSelectedStudent() {
@@ -673,9 +484,8 @@
       document.getElementById("availableCount").textContent = available;
       document.getElementById("completeTeamsCount").textContent = `${completeTeams} / 6`;
 
-      document.getElementById("poolBadge").textContent = `${available} left`;
-      document.getElementById("mobileTabTeamsBadge").textContent = `${completeTeams}/6`;
-      document.getElementById("mobileTabPoolBadge").textContent = `${available}`;
+      const poolBadge = document.getElementById("poolBadge");
+      poolBadge.textContent = `${available} left`;
     }
 
     function renderBanner() {
@@ -687,44 +497,25 @@
         banner.classList.remove("hidden");
         bannerText.textContent = "Nov 25 (11:59 PM) cutoff passed: Teams are finalized. Idea submission: Dec 1 | Model submission: Dec 15.";
         pill.textContent = "Locked";
-        pill.className = "px-2 py-0.5 rounded-md bg-rose-500 text-white font-extrabold uppercase tracking-wider text-[10px]";
+        pill.className = "px-2 py-0.5 rounded bg-rose-500 text-white font-bold";
       } else {
         banner.classList.add("hidden");
         pill.textContent = "Open";
-        pill.className = "px-2 py-0.5 rounded-md bg-amber-400 text-[#3d0911] font-extrabold uppercase tracking-wider text-[10px]";
-      }
-    }
-
-    function renderSelectionDock() {
-      const helperEl = document.getElementById("selectedHelper");
-      const selectedNameEl = document.getElementById("selectedStudentName");
-      const mobileDock = document.getElementById("mobileSelectionDock");
-      const dockNameEl = document.getElementById("dockStudentName");
-
-      if (selectedStudent && !isLocked) {
-        helperEl.classList.remove("hidden");
-        selectedNameEl.textContent = selectedStudent;
-        mobileDock.classList.remove("hidden");
-        dockNameEl.textContent = selectedStudent;
-      } else {
-        helperEl.classList.add("hidden");
-        mobileDock.classList.add("hidden");
+        pill.className = "px-2 py-0.5 rounded bg-amber-400 text-[#4a0e17] font-bold";
       }
     }
 
     function renderAvailablePool() {
-      renderSelectionDock();
-
       const listEl = document.getElementById("availablePoolList");
-      const searchInput = document.getElementById("searchInput");
-      const clearBtn = document.getElementById("clearSearchBtn");
-      const rawQuery = searchInput.value || "";
-      const query = rawQuery.trim().toLowerCase();
+      const query = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+      const helperEl = document.getElementById("selectedHelper");
+      const selectedNameEl = document.getElementById("selectedStudentName");
 
-      if (rawQuery.length > 0) {
-        clearBtn.classList.remove("hidden");
+      if (selectedStudent && !isLocked) {
+        helperEl.classList.remove("hidden");
+        selectedNameEl.textContent = selectedStudent;
       } else {
-        clearBtn.classList.add("hidden");
+        helperEl.classList.add("hidden");
       }
 
       const available = getAvailableStudents().filter((name) =>
@@ -733,36 +524,29 @@
 
       if (available.length === 0) {
         listEl.innerHTML = `
-          <div class="text-center py-8 px-4 rounded-xl border border-dashed border-stone-200 text-xs sm:text-sm text-stone-500">
-            ${query ? "No matching students found." : "All 24 member slots are filled!"}
+          <div class="text-center py-6 px-3 rounded-lg border border-dashed border-slate-200 text-xs text-slate-500">
+            ${query ? "No matching students." : "All 24 member slots filled."}
           </div>
         `;
         return;
       }
 
-      listEl.innerHTML = available.map((name, idx) => {
+      listEl.innerHTML = available.map((name) => {
         const isSelected = selectedStudent === name;
         return `
           <button
             type="button"
             ${isLocked ? "disabled" : `onclick="selectStudentForQuickAssign('${name.replace(/'/g, "\\'")}')"`}
-            class="w-full text-left px-3.5 py-3 rounded-xl border text-xs sm:text-sm font-semibold flex items-center justify-between gap-2 transition active:scale-[0.99] ${
+            class="w-full text-left px-3 py-2 rounded-lg border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 transition ${
               isSelected
-                ? "bg-amber-100 border-amber-500 text-amber-950 ring-2 ring-amber-400/40"
+                ? "bg-amber-100 border-amber-500 text-amber-950 font-semibold"
                 : isLocked
-                ? "bg-stone-50 border-stone-200 text-stone-400 cursor-not-allowed"
-                : "bg-stone-50/80 hover:bg-amber-50/80 border-stone-200 text-stone-800 cursor-pointer"
+                ? "bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed"
+                : "bg-stone-50 hover:bg-amber-50/70 border-slate-200 text-slate-800 cursor-pointer"
             }"
           >
-            <div class="flex items-center gap-2.5 min-w-0">
-              <span class="w-6 h-6 rounded-lg ${isSelected ? "bg-amber-500 text-white" : "bg-stone-200/80 text-stone-600"} text-[11px] font-bold flex items-center justify-center shrink-0">
-                ${idx + 1}
-              </span>
-              <span class="truncate">${name}</span>
-            </div>
-            <span class="text-[11px] font-bold ${isSelected ? "text-amber-800" : "text-[#6b1422]"} shrink-0">
-              ${isLocked ? "" : isSelected ? "Selected ✓" : "Select →"}
-            </span>
+            <span class="truncate">${name}</span>
+            <span class="text-[11px] text-slate-400 shrink-0">${isSelected ? "Tap slot" : ""}</span>
           </button>
         `;
       }).join("");
@@ -776,66 +560,41 @@
         const members = rosters[leader] || [null, null, null, null];
         const filledCount = members.filter(Boolean).length;
         const totalInTeam = 1 + filledCount;
-        const isComplete = totalInTeam === 5;
 
         const slotsHtml = members.map((member, sIdx) => {
           const locked = isSlotLocked(leader, sIdx);
-          const slotNum = sIdx + 2;
 
           if (locked) {
             return `
-              <div class="px-3 py-2.5 rounded-xl border border-stone-200 bg-stone-50/90 text-xs sm:text-sm font-semibold text-stone-800 flex items-center justify-between gap-2">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span class="w-5 h-5 rounded-md bg-stone-200 text-stone-600 text-[11px] font-bold flex items-center justify-center shrink-0">${slotNum}</span>
-                  <span class="truncate">${member || "—"}</span>
-                </div>
-                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-stone-200/80 text-stone-600 shrink-0">Fixed</span>
+              <div class="px-3 py-2.5 rounded-lg border border-slate-200 bg-white text-xs sm:text-sm font-medium text-slate-800 flex items-center justify-between">
+                <span class="truncate">${member || "—"}</span>
               </div>
             `;
           }
 
-          // Quick-tap target when a student is selected from the pool and slot is empty
-          if (selectedStudent && !member) {
-            return `
-              <button
-                type="button"
-                onclick="handleSlotTap('${leader.replace(/'/g, "\\'")}', ${sIdx})"
-                class="w-full px-3 py-3 rounded-xl border-2 border-dashed border-amber-500 bg-amber-50 hover:bg-amber-100 active:scale-[0.99] text-left flex items-center justify-between gap-2 cursor-pointer transition animate-pulse"
-              >
-                <div class="flex items-center gap-2 min-w-0">
-                  <span class="w-5 h-5 rounded-md bg-amber-500 text-white text-[11px] font-bold flex items-center justify-center shrink-0">${slotNum}</span>
-                  <span class="text-xs sm:text-sm font-bold text-amber-950 truncate">+ Place ${selectedStudent}</span>
-                </div>
-                <span class="text-[11px] font-extrabold text-amber-800 shrink-0">Tap</span>
-              </button>
-            `;
-          }
-
           const optionsHtml = [
-            `<option value="">${member ? "— Clear slot —" : `Slot ${slotNum}: Choose member...`}</option>`,
+            `<option value="">${member ? "— Remove / Select —" : "— Select member —"}</option>`,
             ...(member ? [`<option value="${member}" selected>${member}</option>`] : []),
             ...available.map((cand) => `<option value="${cand}">${cand}</option>`)
           ].join("");
 
           return `
             <div
-              class="p-1.5 rounded-xl border ${
-                member ? "border-stone-200 bg-white shadow-2xs" : "border-dashed border-stone-300 bg-stone-50/70"
-              } flex items-center gap-1.5"
+              onclick="handleSlotTap('${leader.replace(/'/g, "\\'")}', ${sIdx})"
+              class="p-2 rounded-lg border ${
+                member ? "border-slate-200 bg-white" : "border-dashed border-slate-300 bg-stone-50"
+              } flex items-center gap-2"
             >
-              <span class="w-6 h-6 ml-1 rounded-md ${member ? "bg-[#6b1422]/10 text-[#6b1422]" : "bg-stone-200/70 text-stone-500"} text-[11px] font-bold flex items-center justify-center shrink-0">
-                ${slotNum}
-              </span>
               <select
-                aria-label="${leader} Member ${slotNum}"
+                aria-label="${leader} Member ${sIdx + 2}"
                 onchange="assignStudent('${leader.replace(/'/g, "\\'")}', ${sIdx}, this.value)"
-                class="custom-select w-full text-base sm:text-sm font-semibold bg-transparent rounded-lg px-2 py-1.5 ${member ? "text-stone-900" : "text-stone-500"} focus:outline-none focus:ring-2 focus:ring-[#6b1422]/25 cursor-pointer"
+                class="w-full text-xs sm:text-sm font-medium bg-white border border-slate-200 rounded-md px-2.5 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#6b1422]/30 focus:border-[#6b1422]"
               >
                 ${optionsHtml}
               </select>
               ${
                 member
-                  ? `<button type="button" onclick="removeStudent('${leader.replace(/'/g, "\\'")}', ${sIdx})" aria-label="Remove ${member}" title="Remove member" class="shrink-0 w-9 h-9 flex items-center justify-center text-base font-bold text-rose-600 hover:bg-rose-50 active:bg-rose-100 rounded-lg cursor-pointer transition">✕</button>`
+                  ? `<button type="button" onclick="event.stopPropagation(); removeStudent('${leader.replace(/'/g, "\\'")}', ${sIdx})" aria-label="Remove ${member}" class="shrink-0 px-2.5 py-1.5 text-sm font-semibold text-rose-600 hover:bg-rose-50 rounded cursor-pointer">×</button>`
                   : ""
               }
             </div>
@@ -843,30 +602,21 @@
         }).join("");
 
         return `
-          <article class="bg-white rounded-2xl border ${isComplete ? "border-emerald-300 ring-1 ring-emerald-500/20" : "border-stone-200"} shadow-xs overflow-hidden flex flex-col">
-            <div class="px-4 py-3 bg-gradient-to-r from-[#3d0911] to-[#6b1422] text-white flex items-center justify-between gap-2">
+          <article class="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col">
+            <div class="px-4 py-3 bg-gradient-to-r from-[#4a0e17] to-[#6b1422] text-white flex items-center justify-between gap-2">
               <div class="min-w-0">
-                <div class="text-[10px] uppercase tracking-wider text-amber-200 font-bold">Group ${gIdx + 1}</div>
-                <h3 class="font-extrabold text-sm sm:text-base truncate">${leader}</h3>
+                <div class="text-[10px] uppercase tracking-wider text-amber-200 font-semibold">Group ${gIdx + 1}</div>
+                <h3 class="font-bold text-sm truncate">${leader}</h3>
               </div>
-              <span class="shrink-0 px-2.5 py-1 rounded-full text-xs font-extrabold ${
-                isComplete ? "bg-emerald-400 text-stone-950" : "bg-white/15 text-amber-100"
-              }">
-                ${totalInTeam} / 5
+              <span class="shrink-0 px-2 py-0.5 rounded-full text-xs font-bold bg-white/15 text-amber-100">
+                ${totalInTeam}/5
               </span>
             </div>
 
-            <div class="p-3 sm:p-3.5 space-y-2 flex-1">
-              <!-- Team Leader Row -->
-              <div class="px-3 py-2.5 rounded-xl bg-rose-50/90 border border-rose-200/80 text-xs sm:text-sm font-bold text-[#4a0e17] flex items-center justify-between gap-2">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span class="w-5 h-5 rounded-md bg-[#6b1422] text-white text-[11px] font-bold flex items-center justify-center shrink-0">1</span>
-                  <span class="truncate">${leader}</span>
-                </div>
-                <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded bg-[#6b1422]/10 text-[#6b1422] shrink-0">Leader</span>
+            <div class="p-3 space-y-2 flex-1">
+              <div class="px-3 py-2 rounded-lg bg-rose-50/70 border border-rose-200/70 text-xs sm:text-sm font-bold text-slate-900 truncate">
+                ${leader}
               </div>
-
-              <!-- 4 Member Slots -->
               ${slotsHtml}
             </div>
           </article>
@@ -882,14 +632,10 @@
     }
 
     function render() {
-      const prevScrollY = window.scrollY;
       renderMetrics();
       renderBanner();
       renderAvailablePool();
       renderGroupsGrid();
-      if (Math.abs(window.scrollY - prevScrollY) > 4) {
-        window.scrollTo(0, prevScrollY);
-      }
     }
 
     function updateCountdown() {
@@ -911,22 +657,6 @@
       timerEl.textContent = `${pad(days)}d : ${pad(hours)}h : ${pad(minutes)}m : ${pad(seconds)}s`;
     }
 
-    function fallbackCopyText(text) {
-      const textarea = document.createElement("textarea");
-      textarea.value = text;
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
-      document.body.appendChild(textarea);
-      textarea.select();
-      try {
-        document.execCommand("copy");
-        showToast("Copied WhatsApp summary");
-      } catch (e) {
-        showToast("Could not copy");
-      }
-      document.body.removeChild(textarea);
-    }
-
     function copyWhatsAppSummary() {
       const lines = [
         "*GANITHASIRI — Science & Maths Exhibition*",
@@ -939,21 +669,18 @@
       GROUP_LEADERS.forEach((leader, idx) => {
         const members = (rosters[leader] || []).filter(Boolean);
         lines.push(`*Group ${idx + 1}: ${leader}* (${1 + members.length}/5)`);
-        lines.push(`1. ${leader} (Leader)`);
+        lines.push(`1. ${leader}`);
         for (let i = 0; i < 4; i++) {
           lines.push(`${i + 2}. ${rosters[leader][i] || "Pending"}`);
         }
         lines.push("");
       });
 
-      const text = lines.join("\n");
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast("Copied WhatsApp summary");
-        }).catch(() => fallbackCopyText(text));
-      } else {
-        fallbackCopyText(text);
-      }
+      navigator.clipboard.writeText(lines.join("\n")).then(() => {
+        showToast("Copied WhatsApp list");
+      }).catch(() => {
+        showToast("Could not copy");
+      });
     }
 
     function exportCSV() {
@@ -972,8 +699,6 @@
       showToast("CSV downloaded");
     }
 
-    // Initialize
-    setMobileTab("groups");
     render();
     openCircularModal();
     updateCountdown();
