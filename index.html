@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ganithasiri — Alva's Nudisiri Virasat Team Allocation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --maroon-deep: #4a0e17;
+      --maroon-rich: #6b1422;
+      --gold-warm: #c59b27;
+      --gold-light: #f6e7b8;
+      --parchment: #fbf8f1;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--parchment);
+      background-image:
+        radial-gradient(circle at 15% 10%, rgba(197, 155, 39, 0.08), transparent 35%),
+        radial-gradient(circle at 85% 90%, rgba(107, 20, 34, 0.06), transparent 40%),
+        linear-gradient(to right, rgba(107, 20, 34, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(107, 20, 34, 0.035) 1px, transparent 1px);
+      background-size: auto, auto, 28px 28px, 28px 28px;
+      color: #1e1b18;
+    }
+
+    .font-heritage {
+      font-family: 'Cinzel', serif;
+    }
+
+    .font-mono-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .drag-over {
+      border-color: #6b1422 !important;
+      background-color: #fef3c7 !important;
+      transform: scale(1.01);
+    }
+
+    .student-chip {
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+
+    .student-chip:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px -2px rgba(74, 14, 23, 0.14);
+    }
+
+    .modal-backdrop {
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Opening Official Circular Modal -->
+  <div id="circularModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-stone-950/70 backdrop-blur-xs p-4 modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="circularTitle">
+    <div class="bg-white border-2 border-amber-500/50 rounded-2xl max-w-2xl w-full shadow-2xl overflow-hidden max-h-[92vh] flex flex-col">
+      <!-- Modal Header -->
+      <div class="bg-gradient-to-r from-[#4a0e17] via-[#6b1422] to-[#4a0e17] text-amber-50 px-6 py-5 border-b border-amber-400/30 flex items-start justify-between gap-4">
+        <div>
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/40 text-amber-200 text-xs font-semibold tracking-wider uppercase mb-2">
+            Official Exhibition Circular • As instructed from authorities
+          </div>
+          <h2 id="circularTitle" class="font-heritage text-xl sm:text-2xl font-bold tracking-wide text-white">
+            Ganithasiri — Science &amp; Mathematics Exhibition
+          </h2>
+          <p class="text-amber-100/90 text-xs sm:text-sm mt-1">
+            Alva's Nudisiri Virasat • <strong>January 6 – January 10</strong>
+          </p>
+        </div>
+        <button onclick="closeCircularModal()" aria-label="Close guidelines" class="text-amber-200 hover:text-white bg-white/10 hover:bg-white/20 rounded-lg p-1.5 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-6 overflow-y-auto space-y-4 text-sm text-slate-700 leading-relaxed">
+        <p class="text-slate-800 font-medium">
+          As instructed from authorities, in connection with the upcoming <strong>Alva's Nudisiri Virasat</strong> held from <strong>January 6 to January 10</strong>, student teams are required to serve as <strong>scientific volunteers</strong> and <strong>exhibit working mathematics models</strong> during the event.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <div class="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200">
+            <div class="text-xs font-bold uppercase tracking-wider text-amber-900">Compulsory Group Size</div>
+            <p class="mt-1 text-slate-800 font-semibold">Exact 5 Students per Group (6 Teams = 30 Total)</p>
+            <p class="text-xs text-slate-600 mt-0.5">Each of the 6 group leaders leads a team of 5 members including themselves.</p>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-rose-50/80 border border-rose-200">
+            <div class="text-xs font-bold uppercase tracking-wider text-rose-900">Auto-Assignment Cutoff</div>
+            <p class="mt-1 text-slate-800 font-semibold">Sharp November 25 at 11:59 PM</p>
+            <p class="text-xs text-slate-600 mt-0.5">Remaining unassigned members will be auto-assigned to open slots and locked.</p>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-emerald-50/80 border border-emerald-200">
+            <div class="text-xs font-bold uppercase tracking-wider text-emerald-900">Team Idea Submission</div>
+            <p class="mt-1 text-slate-800 font-semibold">December 1</p>
+            <p class="text-xs text-slate-600 mt-0.5">Every group must submit their working mathematics model idea on December 1.</p>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-indigo-50/80 border border-indigo-200">
+            <div class="text-xs font-bold uppercase tracking-wider text-indigo-900">Working Model Submission</div>
+            <p class="mt-1 text-slate-800 font-semibold">December 15</p>
+            <p class="text-xs text-slate-600 mt-0.5">Completed working mathematics models must be submitted on December 15.</p>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-700 space-y-1">
+          <div class="font-semibold text-slate-900">Key Rules to Remember:</div>
+          <ul class="list-disc pl-4 space-y-1">
+            <li>Assign accurate members to all 6 group columns before <strong>November 25, 11:59 PM</strong>.</li>
+            <li>Once a student is assigned to any group, they immediately vanish from the available pool for other groups.</li>
+            <li>Pre-assigned members under <strong>PRATHEEK</strong> (Nishith, Sant Siddappa Metagudda, Shripad) are locked.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 bg-stone-50 border-t border-stone-200 flex flex-wrap items-center justify-between gap-3">
+        <span class="text-xs text-slate-500">ganithasiri.pratheek.app • As instructed from authorities</span>
+        <button onclick="closeCircularModal()" class="px-5 py-2.5 rounded-xl bg-[#6b1422] hover:bg-[#4a0e17] text-white font-semibold text-sm shadow transition cursor-pointer">
+          Proceed to Team Allocation
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Header -->
+  <header class="bg-gradient-to-r from-[#4a0e17] via-[#6b1422] to-[#4a0e17] text-white shadow-lg border-b-2 border-amber-500/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div>
+          <div class="flex flex-wrap items-center gap-2 mb-1.5">
+            <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-amber-400/20 text-amber-200 border border-amber-300/30">
+              ganithasiri.pratheek.app
+            </span>
+            <span class="px-2.5 py-0.5 text-xs font-medium rounded-full bg-white/10 text-amber-100">
+              Nudisiri Virasat • Jan 6 – Jan 10
+            </span>
+            <span id="syncStatusBadge" class="px-2.5 py-0.5 text-xs font-medium rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30">
+              Live Sync Active
+            </span>
+          </div>
+          <h1 class="font-heritage text-2xl sm:text-3xl font-bold tracking-wide text-white">
+            Ganithasiri — Science &amp; Mathematics Exhibition
+          </h1>
+          <p class="text-amber-100/90 text-xs sm:text-sm mt-1">
+            As instructed from authorities • 6 Teams of 5 (30 Students) • Auto-Assign: <strong>Nov 25, 11:59 PM</strong> • Idea: <strong>Dec 1</strong> • Model: <strong>Dec 15</strong>
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2.5">
+          <button onclick="openCircularModal()" class="px-3.5 py-2 text-sm font-medium rounded-lg bg-amber-400/15 hover:bg-amber-400/25 text-amber-100 border border-amber-300/40 transition cursor-pointer">
+            Circular &amp; Dates
+          </button>
+          <button onclick="copyWhatsAppSummary()" class="px-3.5 py-2 text-sm font-medium rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white shadow-sm transition cursor-pointer">
+            Copy WhatsApp List
+          </button>
+          <button onclick="exportCSV()" class="px-3.5 py-2 text-sm font-medium rounded-lg bg-white/10 hover:bg-white/20 text-white border border-white/20 transition cursor-pointer">
+            Export CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Countdown & Milestones Strip -->
+      <div class="mt-4 pt-4 border-t border-white/15 grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+        <div class="md:col-span-5 flex items-center justify-between bg-black/25 border border-amber-400/25 rounded-xl px-4 py-2.5">
+          <div>
+            <div id="countdownLabel" class="text-[11px] uppercase tracking-wider text-amber-200 font-semibold">
+              Auto-Assign Countdown (Nov 25, 11:59 PM)
+            </div>
+            <div id="countdownTimer" class="font-mono-num text-lg sm:text-xl font-bold text-white mt-0.5">
+              --d : --h : --m : --s
+            </div>
+          </div>
+          <span id="lockStatePill" class="px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-400 text-[#4a0e17]">
+            Open for Selection
+          </span>
+        </div>
+
+        <div class="md:col-span-7 grid grid-cols-3 gap-2 text-xs">
+          <div class="bg-white/10 rounded-xl px-3 py-2 border border-white/10">
+            <div class="text-amber-200 font-semibold">Nov 25 • 11:59 PM</div>
+            <div class="text-white/90 mt-0.5">Auto-assign remaining slots</div>
+          </div>
+          <div class="bg-white/10 rounded-xl px-3 py-2 border border-white/10">
+            <div class="text-amber-200 font-semibold">Dec 1</div>
+            <div class="text-white/90 mt-0.5">Team idea submission</div>
+          </div>
+          <div class="bg-white/10 rounded-xl px-3 py-2 border border-white/10">
+            <div class="text-amber-200 font-semibold">Dec 15</div>
+            <div class="text-white/90 mt-0.5">Working model submission</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 space-y-6">
+
+    <!-- Status Banner -->
+    <div id="statusBanner" class="hidden rounded-xl px-4 py-3 text-sm font-medium border flex items-center justify-between gap-3">
+      <span id="statusBannerText"></span>
+    </div>
+
+    <!-- Summary Metrics -->
+    <section class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div class="bg-white rounded-xl p-4 border border-stone-200/90 shadow-xs">
+        <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">Total Roster</div>
+        <div class="mt-1 text-2xl font-bold text-slate-900">30 <span class="text-sm font-normal text-slate-500">students</span></div>
+        <div class="text-xs text-slate-500 mt-0.5">6 leaders + 24 team slots</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-stone-200/90 shadow-xs">
+        <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">Filled Member Slots</div>
+        <div id="filledCount" class="mt-1 text-2xl font-bold text-[#6b1422]">3 <span class="text-sm font-normal text-slate-500">/ 24</span></div>
+        <div class="text-xs text-slate-500 mt-0.5">Each team requires 5 total</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-stone-200/90 shadow-xs">
+        <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">Available Pool</div>
+        <div id="availableCount" class="mt-1 text-2xl font-bold text-emerald-700">21</div>
+        <div class="text-xs text-slate-500 mt-0.5">Vanishes when assigned</div>
+      </div>
+      <div class="bg-white rounded-xl p-4 border border-stone-200/90 shadow-xs">
+        <div class="text-xs font-medium text-slate-500 uppercase tracking-wider">Complete Teams (5/5)</div>
+        <div id="completeTeamsCount" class="mt-1 text-2xl font-bold text-amber-700">0 <span class="text-sm font-normal text-slate-500">/ 6</span></div>
+        <div class="text-xs text-slate-500 mt-0.5">Idea Dec 1 • Model Dec 15</div>
+      </div>
+    </section>
+
+    <!-- Layout: Available Pool + 6 Group Columns -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- Left Panel: Vanishing Available Students Pool -->
+      <aside class="lg:col-span-4 bg-white rounded-2xl border border-stone-200 shadow-xs p-5 lg:sticky lg:top-6">
+        <div class="flex items-center justify-between gap-2 mb-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">Available Students Pool</h2>
+            <p class="text-xs text-slate-500">Assigned names vanish automatically</p>
+          </div>
+          <span id="poolBadge" class="px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+            21 left
+          </span>
+        </div>
+
+        <!-- Search Filter -->
+        <div class="relative mb-3">
+          <input
+            id="searchInput"
+            type="text"
+            oninput="renderAvailablePool()"
+            placeholder="Search available student..."
+            class="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#6b1422]/30 focus:border-[#6b1422]"
+          />
+          <svg class="w-4 h-4 text-slate-400 absolute left-3 top-2.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z"/>
+          </svg>
+        </div>
+
+        <!-- Selected Student Quick-Assign Helper -->
+        <div id="selectedHelper" class="hidden mb-3 p-2.5 rounded-lg bg-amber-50 border border-amber-300 text-xs text-amber-950 flex items-center justify-between gap-2">
+          <span>Selected: <strong id="selectedStudentName"></strong> — click an empty slot on any group.</span>
+          <button onclick="clearSelectedStudent()" class="text-amber-800 hover:text-black font-semibold underline cursor-pointer">Cancel</button>
+        </div>
+
+        <!-- Available Chips List -->
+        <div id="availablePoolList" class="space-y-1.5 max-h-[430px] overflow-y-auto pr-1"></div>
+
+        <!-- Locked Leaders Reference -->
+        <div class="mt-4 pt-3 border-t border-slate-100">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-1.5">
+            6 Group Leaders (Fixed)
+          </div>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="px-2 py-0.5 text-[11px] rounded bg-slate-100 text-slate-600 font-medium">PRATHEEK</span>
+            <span class="px-2 py-0.5 text-[11px] rounded bg-slate-100 text-slate-600 font-medium">T AKSHATHA PAI</span>
+            <span class="px-2 py-0.5 text-[11px] rounded bg-slate-100 text-slate-600 font-medium">AMINA FATHIMA</span>
+            <span class="px-2 py-0.5 text-[11px] rounded bg-slate-100 text-slate-600 font-medium">PRATHVIK</span>
+            <span class="px-2 py-0.5 text-[11px] rounded bg-slate-100 text-slate-600 font-medium">RACHANA</span>
+            <span class="px-2 py-0.5 text-[11px] rounded bg-slate-100 text-slate-600 font-medium">AYISHA ZAHEERA S P</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Panel: 6 Group Leader Columns -->
+      <section class="lg:col-span-8">
+        <div id="groupsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-stone-200 mt-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+      <div>
+        <strong>Ganithasiri</strong> (ganithasiri.pratheek.app) • Alva's Nudisiri Virasat (Jan 6–10) • As instructed from authorities
+      </div>
+      <div>
+        Auto-assign: <strong>Nov 25, 11:59 PM</strong> • Idea: <strong>Dec 1</strong> • Model: <strong>Dec 15</strong>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden bg-slate-900 text-white text-sm font-medium px-4 py-2.5 rounded-xl shadow-lg"></div>
+
+  <script>
+    const GROUP_LEADERS = [
+      "PRATHEEK",
+      "T AKSHATHA PAI",
+      "AMINA FATHIMA",
+      "PRATHVIK",
+      "RACHANA",
+      "AYISHA ZAHEERA S P"
+    ];
+
+    const ALL_30_STUDENTS = [
+      "AISHA LUBABA",
+      "NISHITH",
+      "KISHAN",
+      "SANT SIDDAPPA METAGUDDA",
+      "T AKSHATHA PAI",
+      "AYISHA ZAHEERA S P",
+      "BASAVARAJU",
+      "LAKSHMI G D",
+      "NIRIKSHA",
+      "PRATHEEK",
+      "SHREERAKSHA K S",
+      "SHRIPAD",
+      "ANANYA MANJUNATH HEDGE",
+      "PRATHVIK",
+      "YATHISH",
+      "VIDYASHREE YALLAPPA KARAGANNI",
+      "AYESHA",
+      "JANAH TABARAK SHEIKH",
+      "MONU R",
+      "SIENNA DSOUZA",
+      "AMINA FATHIMA",
+      "B THRISHA SALIYAN",
+      "HARSHASHRI",
+      "MANISHA",
+      "RACHANA",
+      "TARUN",
+      "ANANYA",
+      "SHRITHAN S SHETTY",
+      "POORNIMA",
+      "KAUSHAL"
+    ];
+
+    const LOCKED_PRATHEEK_MEMBERS = [
+      "NISHITH",
+      "SANT SIDDAPPA METAGUDDA",
+      "SHRIPAD"
+    ];
+
+    const DEADLINE_MS = new Date("2026-11-25T23:59:00+05:30").getTime();
+
+    function createDefaultRosters() {
+      const data = {};
+      GROUP_LEADERS.forEach((leader) => {
+        if (leader === "PRATHEEK") {
+          data[leader] = [
+            LOCKED_PRATHEEK_MEMBERS[0],
+            LOCKED_PRATHEEK_MEMBERS[1],
+            LOCKED_PRATHEEK_MEMBERS[2],
+            null
+          ];
+        } else {
+          data[leader] = [null, null, null, null];
+        }
+      });
+      return data;
+    }
+
+    let rosters = createDefaultRosters();
+    let isLocked = false;
+    let isSaving = false;
+    let selectedStudent = null;
+
+    function openCircularModal() {
+      const modal = document.getElementById("circularModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeCircularModal() {
+      const modal = document.getElementById("circularModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.remove("hidden");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 2600);
+    }
+
+    function getAssignedSet() {
+      const assigned = new Set(GROUP_LEADERS);
+      GROUP_LEADERS.forEach((leader) => {
+        (rosters[leader] || []).forEach((member) => {
+          if (member) assigned.add(member);
+        });
+      });
+      return assigned;
+    }
+
+    function getAvailableStudents() {
+      const assigned = getAssignedSet();
+      return ALL_30_STUDENTS.filter((name) => !assigned.has(name));
+    }
+
+    function isSlotLocked(leader, slotIndex) {
+      if (isLocked) return true;
+      return leader === "PRATHEEK" && slotIndex < 3;
+    }
+
+    async function syncFromServer(showSyncIndicator = false) {
+      if (isSaving) return;
+      const badge = document.getElementById("syncStatusBadge");
+      try {
+        const res = await fetch("/api/teams", { cache: "no-store" });
+        if (!res.ok) throw new Error("Network response not ok");
+        const data = await res.json();
+
+        if (data.rosters) {
+          rosters = data.rosters;
+          rosters["PRATHEEK"][0] = LOCKED_PRATHEEK_MEMBERS[0];
+          rosters["PRATHEEK"][1] = LOCKED_PRATHEEK_MEMBERS[1];
+          rosters["PRATHEEK"][2] = LOCKED_PRATHEEK_MEMBERS[2];
+        }
+        isLocked = Boolean(data.autoAssigned) || Date.now() >= DEADLINE_MS;
+
+        if (selectedStudent && getAssignedSet().has(selectedStudent)) {
+          selectedStudent = null;
+        }
+
+        if (badge) {
+          badge.textContent = "Live Sync Active";
+          badge.className = "px-2.5 py-0.5 text-xs font-medium rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30";
+        }
+
+        render();
+        if (showSyncIndicator) showToast("Synced with database");
+      } catch (err) {
+        if (badge) {
+          badge.textContent = "Offline / Retrying";
+          badge.className = "px-2.5 py-0.5 text-xs font-medium rounded-full bg-amber-500/20 text-amber-200 border border-amber-400/30";
+        }
+      }
+    }
+
+    async function saveToServer() {
+      if (isLocked || Date.now() >= DEADLINE_MS) {
+        isLocked = true;
+        render();
+        showToast("Allocation window is closed (Nov 25, 11:59 PM).");
+        return;
+      }
+
+      isSaving = true;
+      const badge = document.getElementById("syncStatusBadge");
+      if (badge) {
+        badge.textContent = "Saving...";
+        badge.className = "px-2.5 py-0.5 text-xs font-medium rounded-full bg-sky-500/20 text-sky-200 border border-sky-400/30";
+      }
+
+      try {
+        const res = await fetch("/api/teams", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rosters })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          showToast(data.error || "Could not save assignment. Refreshing...");
+          await syncFromServer();
+          return;
+        }
+
+        rosters = data.rosters;
+        isLocked = Boolean(data.autoAssigned);
+        render();
+      } catch (err) {
+        showToast("Failed to save to database. Please check connection.");
+      } finally {
+        isSaving = false;
+        await syncFromServer();
+      }
+    }
+
+    async function assignStudent(leader, slotIndex, studentName) {
+      if (isSlotLocked(leader, slotIndex)) return;
+      if (!studentName) return;
+
+      const assigned = getAssignedSet();
+      if (assigned.has(studentName) && rosters[leader][slotIndex] !== studentName) {
+        showToast(`${studentName} is already assigned.`);
+        return;
+      }
+
+      rosters[leader][slotIndex] = studentName;
+      selectedStudent = null;
+      render();
+      await saveToServer();
+    }
+
+    async function removeStudent(leader, slotIndex) {
+      if (isSlotLocked(leader, slotIndex)) return;
+      rosters[leader][slotIndex] = null;
+      render();
+      await saveToServer();
+    }
+
+    function selectStudentForQuickAssign(name) {
+      if (isLocked) return;
+      selectedStudent = selectedStudent === name ? null : name;
+      renderAvailablePool();
+    }
+
+    function clearSelectedStudent() {
+      selectedStudent = null;
+      renderAvailablePool();
+    }
+
+    function renderMetrics() {
+      let filledMembers = 0;
+      let completeTeams = 0;
+
+      GROUP_LEADERS.forEach((leader) => {
+        const members = rosters[leader] || [null, null, null, null];
+        const count = members.filter(Boolean).length;
+        filledMembers += count;
+        if (count === 4) completeTeams += 1;
+      });
+
+      const available = getAvailableStudents().length;
+
+      document.getElementById("filledCount").innerHTML = `${filledMembers} <span class="text-sm font-normal text-slate-500">/ 24</span>`;
+      document.getElementById("availableCount").textContent = available;
+      document.getElementById("completeTeamsCount").innerHTML = `${completeTeams} <span class="text-sm font-normal text-slate-500">/ 6</span>`;
+
+      const poolBadge = document.getElementById("poolBadge");
+      poolBadge.textContent = `${available} left`;
+      poolBadge.className = available === 0
+        ? "px-2.5 py-1 text-xs font-semibold rounded-full bg-slate-100 text-slate-600 border border-slate-200"
+        : "px-2.5 py-1 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200";
+    }
+
+    function renderBanner() {
+      const banner = document.getElementById("statusBanner");
+      const bannerText = document.getElementById("statusBannerText");
+      const pill = document.getElementById("lockStatePill");
+
+      if (isLocked) {
+        banner.className = "rounded-xl px-4 py-3 text-sm font-medium border bg-amber-50 border-amber-300 text-amber-950 flex items-center justify-between gap-3";
+        bannerText.textContent = "November 25 (11:59 PM) cutoff reached: Team rosters are finalized and locked. Submit ideas on Dec 1 and working models on Dec 15.";
+        pill.textContent = "Locked & Finalized";
+        pill.className = "px-2.5 py-1 rounded-md text-xs font-semibold bg-rose-500 text-white";
+      } else {
+        banner.classList.add("hidden");
+        pill.textContent = "Open for Selection";
+        pill.className = "px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-400 text-[#4a0e17]";
+      }
+    }
+
+    function renderAvailablePool() {
+      const listEl = document.getElementById("availablePoolList");
+      const query = (document.getElementById("searchInput").value || "").trim().toLowerCase();
+      const helperEl = document.getElementById("selectedHelper");
+      const selectedNameEl = document.getElementById("selectedStudentName");
+
+      if (selectedStudent && !isLocked) {
+        helperEl.classList.remove("hidden");
+        selectedNameEl.textContent = selectedStudent;
+      } else {
+        helperEl.classList.add("hidden");
+      }
+
+      const available = getAvailableStudents().filter((name) =>
+        name.toLowerCase().includes(query)
+      );
+
+      if (available.length === 0) {
+        listEl.innerHTML = `
+          <div class="text-center py-8 px-4 rounded-xl border border-dashed border-slate-200 text-xs text-slate-500">
+            ${query ? "No matching available students." : "All 24 member slots have been assigned!"}
+          </div>
+        `;
+        return;
+      }
+
+      listEl.innerHTML = available.map((name) => {
+        const isSelected = selectedStudent === name;
+        return `
+          <button
+            type="button"
+            ${isLocked ? "disabled" : `draggable="true" onclick="selectStudentForQuickAssign('${name.replace(/'/g, "\\'")}')"`}
+            ondragstart="handleDragStart(event, '${name.replace(/'/g, "\\'")}')"
+            class="student-chip w-full text-left px-3 py-2 rounded-lg border text-xs sm:text-sm font-medium flex items-center justify-between gap-2 ${
+              isSelected
+                ? "bg-amber-100 border-amber-500 text-amber-950 ring-2 ring-amber-400/50"
+                : isLocked
+                ? "bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed"
+                : "bg-stone-50/70 hover:bg-amber-50/70 border-slate-200 text-slate-800 cursor-grab active:cursor-grabbing"
+            }"
+          >
+            <span class="truncate">${name}</span>
+            ${isLocked ? "" : `<span class="text-[11px] text-slate-400 shrink-0">${isSelected ? "Selected" : "Pick / Drag"}</span>`}
+          </button>
+        `;
+      }).join("");
+    }
+
+    function renderGroupsGrid() {
+      const gridEl = document.getElementById("groupsGrid");
+      const available = getAvailableStudents();
+
+      gridEl.innerHTML = GROUP_LEADERS.map((leader, gIdx) => {
+        const members = rosters[leader] || [null, null, null, null];
+        const filledCount = members.filter(Boolean).length;
+        const totalInTeam = 1 + filledCount;
+        const isComplete = totalInTeam === 5;
+
+        const slotsHtml = members.map((member, sIdx) => {
+          const locked = isSlotLocked(leader, sIdx);
+          const dropdownOptions = [
+            ...(member ? [`<option value="${member}" selected>${member}</option>`] : [`<option value="">— Select member —</option>`]),
+            ...available.map((cand) => `<option value="${cand}">${cand}</option>`)
+          ].join("");
+
+          if (locked) {
+            return `
+              <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg border ${
+                member
+                  ? "bg-amber-50/80 border-amber-300/80 text-slate-900"
+                  : "bg-slate-100 border-slate-200 text-slate-400"
+              }">
+                <div class="min-w-0">
+                  <div class="text-[10px] uppercase tracking-wider text-amber-800 font-semibold">
+                    Member ${sIdx + 2} • ${isLocked ? "Locked" : "Pre-Assigned"}
+                  </div>
+                  <div class="text-xs sm:text-sm font-semibold truncate">${member || "Unassigned"}</div>
+                </div>
+                <span class="shrink-0 px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-amber-200/80 text-amber-950">
+                  Locked
+                </span>
+              </div>
+            `;
+          }
+
+          return `
+            <div
+              ondragover="handleDragOver(event)"
+              ondragleave="handleDragLeave(event)"
+              ondrop="handleDrop(event, '${leader.replace(/'/g, "\\'")}', ${sIdx})"
+              onclick="handleSlotClick('${leader.replace(/'/g, "\\'")}', ${sIdx})"
+              class="p-2.5 rounded-lg border transition ${
+                member
+                  ? "bg-white border-slate-300"
+                  : selectedStudent
+                  ? "bg-amber-50/70 border-dashed border-amber-400 cursor-pointer hover:bg-amber-100/70"
+                  : "bg-stone-50/70 border-dashed border-slate-300 hover:border-[#6b1422]/50"
+              }"
+            >
+              <div class="flex items-center justify-between gap-1 mb-1">
+                <span class="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                  Member ${sIdx + 2}
+                </span>
+                ${
+                  member
+                    ? `<button type="button" onclick="event.stopPropagation(); removeStudent('${leader.replace(/'/g, "\\'")}', ${sIdx})" title="Remove student" class="text-xs text-rose-600 hover:text-rose-800 font-semibold px-1 cursor-pointer">Remove</button>`
+                    : `<span class="text-[10px] text-slate-400">${selectedStudent ? "Click to place" : "Empty"}</span>`
+                }
+              </div>
+              <select
+                onclick="event.stopPropagation()"
+                onchange="assignStudent('${leader.replace(/'/g, "\\'")}', ${sIdx}, this.value)"
+                class="w-full text-xs sm:text-sm font-medium bg-transparent border border-slate-200 rounded-md px-2 py-1.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#6b1422]/30 focus:border-[#6b1422] cursor-pointer"
+              >
+                ${dropdownOptions}
+              </select>
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <article class="bg-white rounded-2xl border ${
+            isComplete ? "border-emerald-300 ring-1 ring-emerald-500/20" : "border-stone-200"
+          } shadow-xs overflow-hidden flex flex-col">
+            <div class="px-4 py-3 bg-gradient-to-r from-[#4a0e17] to-[#6b1422] text-white flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <div class="text-[10px] uppercase tracking-wider text-amber-200 font-semibold">
+                  Group ${gIdx + 1} Leader
+                </div>
+                <h3 class="font-bold text-sm truncate" title="${leader}">${leader}</h3>
+              </div>
+              <span class="shrink-0 px-2.5 py-1 rounded-full text-xs font-bold ${
+                isComplete
+                  ? "bg-emerald-400 text-slate-950"
+                  : "bg-white/15 text-amber-100"
+              }">
+                ${totalInTeam}/5
+              </span>
+            </div>
+
+            <div class="p-3.5 space-y-2.5 flex-1">
+              <!-- Leader Row (Member 1) -->
+              <div class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg bg-rose-50/70 border border-rose-200/80">
+                <div class="min-w-0">
+                  <div class="text-[10px] uppercase tracking-wider text-rose-800 font-semibold">Team Leader</div>
+                  <div class="text-xs sm:text-sm font-bold text-slate-900 truncate">${leader}</div>
+                </div>
+                <span class="shrink-0 px-2 py-0.5 text-[10px] font-bold uppercase rounded bg-[#6b1422] text-white">
+                  Lead
+                </span>
+              </div>
+
+              ${slotsHtml}
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function render() {
+      renderMetrics();
+      renderBanner();
+      renderAvailablePool();
+      renderGroupsGrid();
+    }
+
+    // Drag & Drop + Tap Helpers
+    let draggedStudentName = null;
+
+    function handleDragStart(event, name) {
+      if (isLocked) return;
+      draggedStudentName = name;
+      event.dataTransfer.setData("text/plain", name);
+      event.dataTransfer.effectAllowed = "move";
+    }
+
+    function handleDragOver(event) {
+      if (isLocked) return;
+      event.preventDefault();
+      event.currentTarget.classList.add("drag-over");
+    }
+
+    function handleDragLeave(event) {
+      event.currentTarget.classList.remove("drag-over");
+    }
+
+    async function handleDrop(event, leader, slotIndex) {
+      event.preventDefault();
+      event.currentTarget.classList.remove("drag-over");
+      if (isLocked || isSlotLocked(leader, slotIndex)) return;
+      const name = event.dataTransfer.getData("text/plain") || draggedStudentName;
+      draggedStudentName = null;
+      if (name) {
+        await assignStudent(leader, slotIndex, name);
+      }
+    }
+
+    async function handleSlotClick(leader, slotIndex) {
+      if (isLocked || isSlotLocked(leader, slotIndex)) return;
+      if (selectedStudent && !rosters[leader][slotIndex]) {
+        await assignStudent(leader, slotIndex, selectedStudent);
+      }
+    }
+
+    // Countdown to Nov 25, 2026 11:59:00 PM IST
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = DEADLINE_MS - now;
+      const timerEl = document.getElementById("countdownTimer");
+
+      if (diff <= 0) {
+        timerEl.textContent = "00d : 00h : 00m : 00s";
+        if (!isLocked) {
+          syncFromServer();
+        }
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      const pad = (n) => String(n).padStart(2, "0");
+      timerEl.textContent = `${pad(days)}d : ${pad(hours)}h : ${pad(minutes)}m : ${pad(seconds)}s`;
+    }
+
+    function copyWhatsAppSummary() {
+      const lines = [
+        "*GANITHASIRI — Science & Maths Exhibition*",
+        "Alva's Nudisiri Virasat (Jan 6 – Jan 10)",
+        "_As instructed from authorities_",
+        "Auto-Assign: Nov 25, 11:59 PM | Idea: Dec 1 | Model: Dec 15",
+        ""
+      ];
+
+      GROUP_LEADERS.forEach((leader, idx) => {
+        const members = (rosters[leader] || []).filter(Boolean);
+        lines.push(`*Group ${idx + 1} — ${leader}* (${1 + members.length}/5)`);
+        lines.push(`1. ${leader} (Leader)`);
+        for (let i = 0; i < 4; i++) {
+          lines.push(`${i + 2}. ${rosters[leader][i] || "Pending"}`);
+        }
+        lines.push("");
+      });
+
+      navigator.clipboard.writeText(lines.join("\n")).then(() => {
+        showToast("WhatsApp team list copied!");
+      }).catch(() => {
+        showToast("Unable to copy automatically.");
+      });
+    }
+
+    function exportCSV() {
+      const headers = GROUP_LEADERS.map((h) => `"${h}"`).join(",");
+      const rows = [];
+      for (let r = 0; r < 4; r++) {
+        const row = GROUP_LEADERS.map((leader) => `"${rosters[leader][r] || ""}"`).join(",");
+        rows.push(row);
+      }
+      const csvContent = [headers, ...rows].join("\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "ganithasiri-teams.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast("CSV exported!");
+    }
+
+    // Initialize
+    render();
+    openCircularModal();
+    updateCountdown();
+    syncFromServer();
+
+    setInterval(updateCountdown, 1000);
+    setInterval(() => syncFromServer(false), 4000);
+  </script>
+</body>
+</html>
